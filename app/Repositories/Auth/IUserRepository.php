@@ -12,4 +12,6 @@ interface IUserRepository
     public function create(RegisterData $data);
 
     public function exists(string $email) : bool;
+
+    public function find($id) : User;
 }

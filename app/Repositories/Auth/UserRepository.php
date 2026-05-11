@@ -7,6 +7,11 @@ use App\Services\Auth\DTOs\RegisterData;
 
 class UserRepository implements IUserRepository
 {
+    public function find($id) : User
+    {
+        return User::find($id);
+    }
+
     public function getByEmail(string $email) : User
     { 
         return User::where('email' , $email)->firstOrFail();

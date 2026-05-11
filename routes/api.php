@@ -15,7 +15,7 @@ Route::prefix('/v1')->group(function (){
     Route::post('/register' , RegisterController::class);
 
     Route::middleware('auth:sanctum')->prefix('/admin')->group(function (){
-        Route::put('/ticket/approve')->middleware('');
+        Route::put('/ticket/approve' , []);
     });
     
     Route::middleware('auth:sanctum')->group(function (){

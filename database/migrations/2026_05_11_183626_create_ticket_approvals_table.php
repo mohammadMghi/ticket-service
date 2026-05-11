@@ -17,6 +17,8 @@ return new class extends Migration
 
             $table->foreignId('approved_by')->constrained('users');
 
+            $table->foreignId('approval_step_id')->constrained('approval_steps');
+
             $table->text('comment');
 
             $table->timestamp('approved_at');

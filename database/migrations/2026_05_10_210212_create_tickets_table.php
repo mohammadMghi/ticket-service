@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->string('status');
             $table->text('title');
             $table->text('description');
             $table->string('status');
