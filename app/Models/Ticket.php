@@ -10,4 +10,12 @@ class Ticket extends Model
     protected $casts = [
         'status' => TicketStatusType::class
     ];
+
+    protected $fillable = [
+        'title',
+        'description',
+        'status',
+        'user_id',
+        'file_path'
+    ];
 }

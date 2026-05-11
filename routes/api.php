@@ -14,5 +14,12 @@ Route::prefix('/v1')->group(function (){
     Route::post('/login' , LoginController::class);
     Route::post('/register' , RegisterController::class);
 
-    Route::post('/ticket' , CreateTicketController::class);
+    Route::middleware('auth:sanctum')->prefix('/admin')->group(function (){
+        Route::put('/ticket/approve')->middleware('');
+    });
+    
+    Route::middleware('auth:sanctum')->group(function (){
+        Route::post('/ticket' , CreateTicketController::class);
+    });
+
 }); 

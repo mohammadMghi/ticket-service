@@ -2,6 +2,7 @@
 
 namespace App\Services\Ticket\DTOs;
 
+use App\Services\Ticket\Enums\TicketStatusType;
 use App\Services\Ticket\ValueObjects\Description;
 use App\Services\Ticket\ValueObjects\FilePath;
 use App\Services\Ticket\ValueObjects\Title;
@@ -19,7 +20,9 @@ class CreateTicketData
         return [
             'title' => $this->title->value(),
             'description' => $this->description->value(),
-            'file' => $this->file->value(),
+            'file_path' => $this->file->value(),
+            'status' => TicketStatusType::PENDDING->value,
+            'user_id' => auth()->user()->id
         ];
     }
 }

@@ -23,10 +23,10 @@ class CreateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['nullable', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
             'file' => [
-                'nullable',
+                'required',
                 'file',
                 'mimes:jpg,jpeg,png,webp,pdf',
                 'max:5120',
