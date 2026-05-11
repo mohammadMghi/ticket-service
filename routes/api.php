@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Ticket\ApproveTicketController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Ticket\CreateTicketController;
@@ -15,7 +16,7 @@ Route::prefix('/v1')->group(function (){
     Route::post('/register' , RegisterController::class);
 
     Route::middleware('auth:sanctum')->prefix('/admin')->group(function (){
-        Route::put('/ticket/approve' , []);
+        Route::put('/ticket/approve/{id}' , ApproveTicketController::class);
     });
     
     Route::middleware('auth:sanctum')->group(function (){

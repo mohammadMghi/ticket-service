@@ -9,4 +9,6 @@ interface ITicketService
     public function create(CreateTicketData $data);
 
     public function message();
+
+    public function approve($ticket_id,$admin_id,$comment) : string;
 }

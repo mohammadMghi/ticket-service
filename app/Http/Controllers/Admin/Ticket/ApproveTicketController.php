@@ -10,10 +10,10 @@ class ApproveTicketController extends Controller
 {
     public function __construct(protected ITicketService $ticketService){}
 
-    public function __invoke()
+    public function __invoke(Request $request,$ticket_id)
     { 
-        $user = auth()->user();
+        $admin = auth()->user();
 
-        
+        $this->ticketService->approve($ticket_id,$admin->id,$request->comment);
     }
 }
