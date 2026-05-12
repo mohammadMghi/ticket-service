@@ -34,7 +34,7 @@ class TicketRepository implements ITicketRepository
     }
  
     public function insertApprove(ApproveTicketData $data)
-    {  
+    {   
         TicketApproval::create([
             'ticket_id' => $data->ticket_id,
             'approved_by' => $data->admin_id,

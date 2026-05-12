@@ -6,11 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Ticket\CreateTicketRequest;
 use App\Services\Ticket\Contracts\ITicketService;
 use App\Services\Ticket\DTOs\CreateTicketData;
-use App\Services\Ticket\ValueObjects\Description;
-use App\Services\Ticket\ValueObjects\File;
+use App\Services\Ticket\ValueObjects\Description; 
 use App\Services\Ticket\ValueObjects\FilePath;
-use App\Services\Ticket\ValueObjects\Title;
-use Illuminate\Http\Request;
+use App\Services\Ticket\ValueObjects\Title; 
 
 class CreateTicketController extends Controller
 {

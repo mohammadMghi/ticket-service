@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Services\Ticket\DTOs;
-
-use App\Services\Ticket\Enums\TicketStatusType;
+ 
 use App\Services\Ticket\ValueObjects\Description;
 use App\Services\Ticket\ValueObjects\FilePath;
 use App\Services\Ticket\ValueObjects\Title;

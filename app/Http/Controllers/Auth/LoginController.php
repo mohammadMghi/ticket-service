@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\DTOs\LoginData;  
-use App\Services\Auth\ValueObjects\PasswordHash;
-use Illuminate\Http\Request;
+use App\Services\Auth\ValueObjects\PasswordHash; 
 
 class LoginController extends Controller
 {

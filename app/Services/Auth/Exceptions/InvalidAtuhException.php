@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Ticket\Exceptions;
+namespace App\Services\Auth\Exceptions;
 
 use Exception;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
-class AdminAllowedApproveException extends Exception
+class InvalidAtuhException extends Exception
 {
     public function render(Request $request)
     {
@@ -13,6 +13,6 @@ class AdminAllowedApproveException extends Exception
             'error' => [
                 'message' => $this->message
             ]
-        ] , 403);
+        ] , 401);
     }
 }

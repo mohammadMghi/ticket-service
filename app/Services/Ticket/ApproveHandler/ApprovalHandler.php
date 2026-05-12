@@ -2,16 +2,19 @@
 
 namespace App\Services\Ticket\ApproveHandler;
 
-use App\Repositories\Ticket\ITicketRepository;
-use App\Services\Ticket\Exceptions\AdminAllowedApproveException;
-use App\Services\Ticket\Exceptions\TicketAlreadyApprovedException;
+use App\Notifications\SendAprovalEmailNorification;
+use App\Repositories\Auth\IUserRepository;
+use App\Repositories\Ticket\ITicketRepository; 
 
 abstract class ApprovalHandler
 {
-    use ApproveValidationTrait;
+    use SendNotificationTrait;
     protected ?ApprovalHandler $next = null;
 
-    public function __construct(protected ITicketRepository $repo) {}
+    public function __construct(
+        protected ITicketRepository $repo,
+        protected IUserRepository $userRepo
+        ) {}
 
     public function setNext(ApprovalHandler $handler): ApprovalHandler
     {
@@ -20,20 +23,28 @@ abstract class ApprovalHandler
     } 
 
     public function handle($ticket, $admin, $comment)
-    {    
-        if (!$this->canHandle($admin)) {
-            return;
-        }
+    {     
+        if ($this->canHandle($admin)) {
+            $this->process($ticket, $admin, $comment);
 
-        $this->process($ticket, $admin, $comment);
+            $this->sendNotification($ticket);
 
+            return 'Ticket fully approved.';
+        } 
+        
         if ($this->next) {
             return $this->next->handle($ticket, $admin, $comment);
         }
-
-        return 'Ticket fully approved.';
     }
 
 
     abstract protected function process($ticket, $admin, $comment): void;
+
+    public function currentApproveStep($ticket_id)
+    {
+        $approvalSteps = $this->repo->getApprovalOrderBySteps(); 
+        $completedApprovals = $this->repo->getApprovalsCount($ticket_id);
+       
+        return $approvalSteps[$completedApprovals] ?? null;
+    }
 }

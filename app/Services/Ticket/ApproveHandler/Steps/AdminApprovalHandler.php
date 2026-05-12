@@ -10,17 +10,13 @@ use App\Services\Ticket\Enums\TicketStatusType;
 class AdminApprovalHandler extends ApprovalHandler
 {   
     protected function canHandle($admin): bool
-    { 
+    {  
         return $admin->role_id === Role::ADMIN;
     } 
 
     protected function process($ticket, $admin, $comment): void
-    { 
-        $current_step = $this->currentApproveStep($ticket->id);
-         
-        $this->ensureTicketNotFullApproved($current_step);
-
-        $this->ensureAdminAllowedApprove($admin,$current_step); 
+    {   
+        $current_step = $this->currentApproveStep($ticket->id); 
         
         $this->repo->insertApprove(new ApproveTicketData(
             $ticket->id,
