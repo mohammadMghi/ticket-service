@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
+    const ADMIN = 1;
+    const SUPER_ADMIN = 2;
+
     use HasFactory;
 
     protected $fillable = [

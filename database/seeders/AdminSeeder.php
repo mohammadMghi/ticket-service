@@ -15,21 +15,21 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
 
-        $role_level_1 = Role::where('name' , 'admin-level-1')->first();
+        $adminRole = Role::where('name' , 'admin')->first();
 
         User::create([
-            'name' => 'Test 1',
-            'email' => 'adminlevel1@example.com',
-            'role_id' => $role_level_1->id,
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+            'role_id' => $adminRole->id,
             'password' => '12345678'
         ]);
 
-        $role_level_2 = Role::where('name' , 'admin-level-2')->first();
+        $superAdmin = Role::where('name' , 'super-admin')->first();
 
         User::create([
-            'name' => 'Test 2',
-            'email' => 'adminlevel2@example.com',
-            'role_id' => $role_level_2->id,
+            'name' => 'super admin',
+            'email' => 'superadmin@example.com',
+            'role_id' => $superAdmin->id,
             'password' => '12345678'
         ]);
     }

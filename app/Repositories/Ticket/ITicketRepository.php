@@ -8,6 +8,8 @@ use App\Services\Ticket\DTOs\CreateTicketData;
 
 interface ITicketRepository
 {
+    public function find($id);
+
     public function create(CreateTicketData $data) : Ticket; 
 
     public function getApprovalOrderBySteps();
