@@ -15,11 +15,11 @@ Route::prefix('/v1')->group(function (){
     Route::post('/login' , LoginController::class);
     Route::post('/register' , RegisterController::class);
 
-    Route::middleware('auth:sanctum')->prefix('/admin')->group(function (){
-        Route::put('/ticket/approve/{id}' , ApproveTicketController::class);
+    Route::middleware(['auth:sanctum' , 'admin'])->prefix('/admin')->group(function (){
+        Route::put('/ticket/approve/{ticket_id}' , ApproveTicketController::class);
     });
     
-    Route::middleware('auth:sanctum')->group(function (){
+    Route::prefix('/user')->middleware(['auth:sanctum'])->group(function (){
         Route::post('/ticket' , CreateTicketController::class);
     });
 

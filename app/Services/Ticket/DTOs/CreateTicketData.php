@@ -21,7 +21,7 @@ class CreateTicketData
             'title' => $this->title->value(),
             'description' => $this->description->value(),
             'file_path' => $this->file->value(),
-            'status' => TicketStatusType::PENDDING->value,
+            'status' => null,
             'user_id' => auth()->user()->id
         ];
     }
