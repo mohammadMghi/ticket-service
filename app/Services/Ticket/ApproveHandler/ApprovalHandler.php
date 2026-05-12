@@ -8,7 +8,7 @@ use App\Repositories\Ticket\ITicketRepository;
 
 abstract class ApprovalHandler
 {
-    use SendNotificationTrait;
+    use SendNotificationTrait,CurrentApproveStepTrait;
     protected ?ApprovalHandler $next = null;
 
     public function __construct(
@@ -26,25 +26,13 @@ abstract class ApprovalHandler
     {     
         if ($this->canHandle($admin)) {
             $this->process($ticket, $admin, $comment);
-
             $this->sendNotification($ticket);
-
-            return 'Ticket fully approved.';
+            return;
         } 
         
         if ($this->next) {
             return $this->next->handle($ticket, $admin, $comment);
         }
-    }
-
-
+    } 
     abstract protected function process($ticket, $admin, $comment): void;
-
-    public function currentApproveStep($ticket_id)
-    {
-        $approvalSteps = $this->repo->getApprovalOrderBySteps(); 
-        $completedApprovals = $this->repo->getApprovalsCount($ticket_id);
-       
-        return $approvalSteps[$completedApprovals] ?? null;
-    }
 }

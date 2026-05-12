@@ -2,6 +2,7 @@
 
 namespace App\Services\Ticket;
 
+use App\Jobs\ApproveTicketJob;
 use App\Models\Ticket;
 use App\Repositories\Auth\IUserRepository;
 use App\Repositories\Ticket\ITicketRepository;
@@ -31,5 +32,12 @@ class TicketService implements ITicketService
     public function approve($ticket_id,$admin_id,$comment)
     { 
         $this->approveAction->execute($ticket_id,$admin_id,$comment);
+    }
+
+    public function approveBulk(array $ticket_ids,$admin_id,$comment)
+    {
+        foreach ($ticket_ids as $ticket_id) {
+            ApproveTicketJob::dispatch($ticket_id,$admin_id,$comment);
+        }
     }
 }

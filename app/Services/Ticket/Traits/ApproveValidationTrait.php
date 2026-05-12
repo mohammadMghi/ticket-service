@@ -2,6 +2,7 @@
 
 namespace App\Services\Ticket\Traits;
 
+use App\Services\Ticket\ApproveHandler\CurrentApproveStepTrait;
 use App\Services\Ticket\ApproveHandler\Steps\AdminApprovalHandler;
 use App\Services\Ticket\ApproveHandler\Steps\SupperAdminApprovalHandler; 
 use App\Services\Ticket\Exceptions\AdminAllowedApproveException;
@@ -10,6 +11,7 @@ use DB;
 
 trait ApproveValidationTrait
 {  
+    use CurrentApproveStepTrait;
     public function validation($ticket,$admin)
     {
         $current_steps = $this->currentApproveStep($ticket->id);
@@ -17,16 +19,7 @@ trait ApproveValidationTrait
         $this->ensureTicketNotFullApproved($current_steps);
 
         $this->ensureAdminAllowedApprove($admin,$current_steps);
-    }
-
-    public function currentApproveStep($ticket_id)
-    {
-        $approvalSteps = $this->repo->getApprovalOrderBySteps(); 
-        $completedApprovals = $this->repo->getApprovalsCount($ticket_id);
-       
-        return $approvalSteps[$completedApprovals] ?? null;
-    }
-
+    } 
 
     private function ensureTicketNotFullApproved($current_step)
     {  
