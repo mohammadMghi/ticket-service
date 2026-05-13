@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ApproveTicketJob implements ShouldQueue
 {
@@ -26,5 +28,15 @@ class ApproveTicketJob implements ShouldQueue
             $this->adminId,
             $this->comment
         );
+    }
+
+    public function failed(Throwable $exception)
+    {
+        Log::error('Ticket approval job failed', [
+            'ticket_id' => $this->ticketId,
+            'admin_id' => $this->adminId,
+            'comment' => $this->comment,
+            'error' => $exception->getMessage(),
+        ]);
     }
 }

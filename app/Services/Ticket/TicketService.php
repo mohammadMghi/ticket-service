@@ -2,18 +2,12 @@
 
 namespace App\Services\Ticket;
 
-use App\Jobs\ApproveTicketJob;
-use App\Models\Ticket;
+use App\Jobs\ApproveTicketJob; 
 use App\Repositories\Auth\IUserRepository;
 use App\Repositories\Ticket\ITicketRepository;
 use App\Services\Ticket\Actions\ApproveTicketAction;
-use App\Services\Ticket\Contracts\ITicketService;
-use App\Services\Ticket\DTOs\ApproveTicketData;
-use App\Services\Ticket\DTOs\CreateTicketData;
-use App\Services\Ticket\Enums\TicketStatusType;
-use App\Services\Ticket\Exceptions\TicketAlreadyApprovedException;
-use App\Services\Ticket\Trait\ApproveTicketTrait;
-use DB;
+use App\Services\Ticket\Contracts\ITicketService; 
+use App\Services\Ticket\DTOs\CreateTicketData;  
 
 class TicketService implements ITicketService
 { 
@@ -35,7 +29,7 @@ class TicketService implements ITicketService
     }
 
     public function approveBulk(array $ticket_ids,$admin_id,$comment)
-    {
+    { 
         foreach ($ticket_ids as $ticket_id) {
             ApproveTicketJob::dispatch($ticket_id,$admin_id,$comment);
         }

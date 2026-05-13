@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Ticket\ApproveBulkTicktController;
 use App\Http\Controllers\Admin\Ticket\ApproveTicketController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -17,6 +18,7 @@ Route::prefix('/v1')->group(function (){
 
     Route::middleware(['auth:sanctum' , 'admin'])->prefix('/admin')->group(function (){
         Route::put('/ticket/approve/{ticket_id}' , ApproveTicketController::class);
+        Route::put('/ticket/bulk/approve' , ApproveBulkTicktController::class);
     });
     
     Route::prefix('/user')->middleware(['auth:sanctum'])->group(function (){

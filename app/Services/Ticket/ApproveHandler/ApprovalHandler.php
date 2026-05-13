@@ -13,7 +13,8 @@ abstract class ApprovalHandler
 
     public function __construct(
         protected ITicketRepository $repo,
-        protected IUserRepository $userRepo
+        protected IUserRepository $userRepo,
+        protected SendToWebservice $sendToWebservice
         ) {}
 
     public function setNext(ApprovalHandler $handler): ApprovalHandler

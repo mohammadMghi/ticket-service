@@ -5,8 +5,7 @@ namespace App\Services\Ticket\Actions;
 use App\Repositories\Auth\IUserRepository;
 use App\Repositories\Ticket\ITicketRepository;
 use App\Services\Ticket\ApproveHandler\Steps\AdminApprovalHandler;
-use App\Services\Ticket\ApproveHandler\Steps\SupperAdminApprovalHandler;
-use App\Services\Ticket\Trait\ApproveTicketTrait;
+use App\Services\Ticket\ApproveHandler\Steps\SupperAdminApprovalHandler; 
 use App\Services\Ticket\Traits\ApproveValidationTrait;
 use DB;
 

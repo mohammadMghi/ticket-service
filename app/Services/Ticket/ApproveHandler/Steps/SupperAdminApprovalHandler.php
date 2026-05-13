@@ -2,10 +2,12 @@
 
 namespace App\Services\Ticket\ApproveHandler\Steps;
 
+use App\Jobs\SendTicketToWebserviceJob;
 use App\Models\Role;
 use App\Services\Ticket\ApproveHandler\ApprovalHandler;
 use App\Services\Ticket\DTOs\ApproveTicketData;
-use App\Services\Ticket\Enums\TicketStatusType; 
+use App\Services\Ticket\Enums\TicketStatusType;
+use Illuminate\Support\Facades\Log; 
 
 class SupperAdminApprovalHandler extends ApprovalHandler
 { 
@@ -24,6 +26,8 @@ class SupperAdminApprovalHandler extends ApprovalHandler
             $current_step->id,
             $comment,
             TicketStatusType::APPROVED
-        ));
+        )); 
+        
+        SendTicketToWebserviceJob::dispatch($ticket->id);
     } 
 }
