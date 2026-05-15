@@ -11,4 +11,6 @@ interface ITicketService
     public function approve($ticket_id,$admin_id,$comment);
 
     public function approveBulk(array $ticket_ids,$admin_id,$comment);
+
+    public function loadTicket($ticketId);
 }

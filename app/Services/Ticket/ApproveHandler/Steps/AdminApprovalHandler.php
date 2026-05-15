@@ -2,10 +2,14 @@
 
 namespace App\Services\Ticket\ApproveHandler\Steps;
 
+use App\Events\ApprovedTicketEvent;
+use App\Events\TicketApproved;
+use App\EventSourcing\EventStore;
 use App\Models\Role;
 use App\Services\Ticket\ApproveHandler\ApprovalHandler;
 use App\Services\Ticket\DTOs\ApproveTicketData;
 use App\Services\Ticket\Enums\TicketStatusType;
+use Str;
 
 class AdminApprovalHandler extends ApprovalHandler
 {   
@@ -24,6 +28,20 @@ class AdminApprovalHandler extends ApprovalHandler
             $current_step->id,
             $comment,
             TicketStatusType::PENDDING_NEXT_APPROVAL
-        ));
+        )); 
+        
+        $event = new TicketApproved(
+            $ticket->id,
+            TicketStatusType::PENDDING_NEXT_APPROVAL->value,
+            $ticket->description,
+            $ticket->title,
+        );
+ 
+        app(EventStore::class)->append(
+            $ticket->id,
+            'Ticket',
+            $event,
+            1
+        );
     }
 }

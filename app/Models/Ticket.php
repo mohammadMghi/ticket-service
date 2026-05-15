@@ -50,5 +50,5 @@ class Ticket extends Model
         $totalSteps = ApprovalStep::count();
 
         return $this->approvals()->count() >= $totalSteps;
-    } 
+    }
 }

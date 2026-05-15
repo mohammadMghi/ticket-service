@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Ticket\ApproveBulkTicktController;
 use App\Http\Controllers\Admin\Ticket\ApproveTicketController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ShowTicketEventsController;
 use App\Http\Controllers\Ticket\CreateTicketController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,5 @@ Route::prefix('/v1')->group(function (){
         Route::post('/ticket' , CreateTicketController::class);
     });
 
+    Route::get('/ticket/events/show' , ShowTicketEventsController::class);
 }); 

@@ -2,6 +2,8 @@
 
 namespace App\Services\Ticket;
 
+use App\Aggregates\TicketAggregate;
+use App\EventSourcing\EventStore;
 use App\Jobs\ApproveTicketJob; 
 use App\Repositories\Auth\IUserRepository;
 use App\Repositories\Ticket\ITicketRepository;
@@ -14,7 +16,8 @@ class TicketService implements ITicketService
      public function __construct(
         protected ITicketRepository $repo,
         protected IUserRepository $userRepo,
-        protected ApproveTicketAction $approveAction
+        protected ApproveTicketAction $approveAction,
+        protected EventStore $evnetStore
         ) 
     {}
 
@@ -33,5 +36,27 @@ class TicketService implements ITicketService
         foreach ($ticket_ids as $ticket_id) {
             ApproveTicketJob::dispatch($ticket_id,$admin_id,$comment);
         }
+    }
+
+    public function loadTicket($ticketId)
+    {
+        $events = $this->evnetStore->getEvents($ticketId);
+
+        $aggregate = new TicketAggregate();
+        
+        foreach ($events as $event) {
+            $eventClass = $event->event_type;
+            $payload = json_decode($event->payload);
+          
+            $eventObject = new $eventClass(...(array)$payload);
+         
+            $method = 'apply'.class_basename($eventClass);
+ 
+            if (method_exists($aggregate, $method)) {
+                $aggregate->$method($eventObject);
+            }
+        }
+
+        return $aggregate;
     }
 }

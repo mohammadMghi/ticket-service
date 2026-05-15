@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Services\Ticket\ApproveHandler\Steps;
-
+  
+use App\Events\TicketApproved;
+use App\EventSourcing\EventStore;
 use App\Jobs\SendTicketToWebserviceJob;
 use App\Models\Role;
 use App\Services\Ticket\ApproveHandler\ApprovalHandler;
 use App\Services\Ticket\DTOs\ApproveTicketData;
 use App\Services\Ticket\Enums\TicketStatusType;
-use Illuminate\Support\Facades\Log; 
+use Str; 
 
 class SupperAdminApprovalHandler extends ApprovalHandler
 { 
@@ -28,6 +30,20 @@ class SupperAdminApprovalHandler extends ApprovalHandler
             TicketStatusType::APPROVED
         )); 
         
-        SendTicketToWebserviceJob::dispatch($ticket->id);
+        SendTicketToWebserviceJob::dispatch($ticket->id); 
+
+        $event = new TicketApproved(
+            $ticket->id,
+            TicketStatusType::PENDDING_NEXT_APPROVAL->value,
+            $ticket->description,
+            $ticket->title,
+        );      
+ 
+        app(EventStore::class)->append(
+            $ticket->id,
+            'Ticket',
+            $event,
+            1
+        );
     } 
 }
